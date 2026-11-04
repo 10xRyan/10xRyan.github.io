@@ -1,45 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Yinqi Yang</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      line-height: 1.6;
-      padding: 20px;
-    }
-    h1 { margin-bottom: 5px; }
-    a { color: #1a73e8; text-decoration: none; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Name</title>
+  <meta name="description" content="Personal website of Your Name.">
+  <!-- Inter is a free font with a clean, modern feel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Yinqi Yang</h1>
-<p>PhD Student in Philosophy, Rice University</p>
+  <!-- Frosted-glass navigation bar that stays at the top -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">Your Name</a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<h2>About Me</h2>
-<p>
-Empty
-</p>
+  <main>
 
-<h2>Research & Publications</h2>
-<ul>
-  <li>Paper Title — Journal / Status</li>
-  <li>Working Paper — Topic</li>
-</ul>
+    <!-- HERO: the big opening statement -->
+    <section class="hero">
+      <p class="eyebrow reveal">Hello, I'm</p>
+      <h1 class="headline reveal">Your Name.</h1>
+      <p class="subhead reveal">Designer. Builder. Curious about everything.<br>Replace this with a line about you.</p>
+      <div class="actions reveal">
+        <a href="#work" class="btn btn-primary">See my work</a>
+        <a href="#contact" class="link-arrow">Get in touch</a>
+      </div>
+      <!-- Replace photo.jpg with your own image in the same folder -->
+      <div class="hero-image reveal">
+        <img src="photo.jpg" alt="Photo of Your Name">
+      </div>
+    </section>
 
-<h2>Teaching</h2>
-<ul>
-  <li>PHIL 266 — Teaching Assistant</li>
-</ul>
+    <!-- ABOUT: dark full-width band -->
+    <section id="about" class="band dark">
+      <div class="container narrow">
+        <p class="eyebrow reveal">About</p>
+        <h2 class="reveal">A short, confident line<br>that sums you up.</h2>
+        <p class="lead reveal">
+          Write a few sentences about yourself: what you do, what you care
+          about, and what you're working on right now. Keep it short, and
+          let the white space do the talking.
+        </p>
+      </div>
 
-<h2>CV</h2>
-<p><a href="cv.pdf">Download CV</a></p>
+      <!-- Quick stats: change the numbers and labels -->
+      <div class="container stats">
+        <div class="stat reveal"><span class="num">5+</span><span class="label">Years of experience</span></div>
+        <div class="stat reveal"><span class="num">20</span><span class="label">Projects shipped</span></div>
+        <div class="stat reveal"><span class="num">∞</span><span class="label">Cups of coffee</span></div>
+      </div>
+    </section>
 
-<h2>Contact</h2>
-<p>Email: yourname@email.com</p>
+    <!-- WORK: grid of large rounded tiles. Copy an <a class="tile"> block to add more -->
+    <section id="work" class="band">
+      <div class="container">
+        <p class="eyebrow center reveal">Selected work</p>
+        <h2 class="center reveal">Things I've made.</h2>
 
+        <div class="tiles">
+          <a href="#" class="tile tile-wide grad-1 reveal">
+            <p class="tile-kicker">Featured</p>
+            <h3>Project One</h3>
+            <p>A one-sentence description of your best project.</p>
+            <span class="link-arrow">Learn more</span>
+          </a>
+          <a href="#" class="tile grad-2 reveal">
+            <h3>Project Two</h3>
+            <p>What it is, in a sentence.</p>
+            <span class="link-arrow">Learn more</span>
+          </a>
+          <a href="#" class="tile grad-3 reveal">
+            <h3>Project Three</h3>
+            <p>What it is, in a sentence.</p>
+            <span class="link-arrow">Learn more</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="band light-gray">
+      <div class="container narrow center">
+        <h2 class="reveal">Let's talk.</h2>
+        <p class="lead reveal">Have an idea, a project, or just want to say hi?</p>
+        <div class="actions reveal">
+          <a href="mailto:you@example.com" class="btn btn-primary">Email me</a>
+        </div>
+        <div class="social reveal">
+          <a href="https://github.com/yourusername">GitHub</a>
+          <a href="https://www.linkedin.com/in/yourusername">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Your Name. Built by hand.</p>
+  </footer>
+
+  <script>
+    // Fill in the current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Fade elements in as they scroll into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
