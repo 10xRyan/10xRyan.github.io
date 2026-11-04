@@ -2,12 +2,13 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name</title>
-  <meta name="description" content="Personal website of Your Name: research, writing, teaching, and life beyond work.">
+  <title>Yinqi Yang</title>
+  <meta name="description" content="Personal website of Yinqi Yang: research, writing, teaching, and life beyond work.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
   <!-- Light by default; remembers a visitor's choice if they switch -->
   <script>
     try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
@@ -54,7 +55,6 @@
           </div>
         </div>
         <a href="#teaching">Teaching</a>
-        
         <a href="cv.pdf">CV</a>
         <a href="#contact" class="nav-cta">Get in touch</a>
       </nav>
@@ -66,10 +66,7 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero container">
       <div class="hero-text">
-        <p class="status reveal"></p>
-
-        <h1 class="hero-title reveal">Yinqi Yang
-        </h1>
+        <h1 class="hero-title reveal">Yinqi Yang</h1>
 
         <p class="hero-bio reveal">I’m a PhD student in Philosophy at Rice University. I think and write about various topics in philosophy, including moral psychology, (meta)ethics, agency, and epistemology.<div><br></div><div>I’m very sympathetic to the idea that philosophy should be approached interdisciplinarily, and so empirical and theoretical work from other disciplines has a special place in my heart. One of my current intellectual challenges is figuring out how to take empirical findings in psychology and neuroscience seriously without losing the philosophical spine.</div></p>
 
@@ -81,25 +78,16 @@
           </a>
         </div>
 
-        <ul class="hero-meta reveal">
-          
-          
-        </ul>
       </div>
 
       <!-- Portrait card with floating details -->
       <div class="hero-visual reveal">
         <div class="portrait">
           <!-- Shows your initials until you add photo.jpg to the folder -->
-          <div class="portrait-fallback" aria-hidden="true">YN</div>
-          
+          <div class="portrait-fallback" aria-hidden="true">YY</div>
+          <img src="photo.jpg" alt="Portrait of Yinqi Yang" onerror="this.classList.add('missing')">
         </div>
 
-        
-
-        
-
-        <p class="credit"><br></p>
       </div>
     </section>
 
@@ -391,8 +379,8 @@
   </main>
 
   <footer class="footer container">
-    <span class="brand-mark small">YN</span>
-    <p>© <span id="year"></span> Your Name · Made with care</p>
+    <span class="brand-mark small">YY</span>
+    <p>© <span id="year"></span> Yinqi Yang · Made with care</p>
     <a href="#top">Back to top ↑</a>
   </footer>
 
@@ -408,103 +396,132 @@
     addEventListener("hashchange", loadEditor);
     addEventListener("load", loadEditor);
 
+    // Each feature below runs on its own, so deleting any part of the page
+    // (a section, a button, the rotating phrase…) never breaks the rest.
+    const run = (name, fn) => { try { fn(); } catch (e) { console.warn("[site] " + name + " skipped:", e); } };
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+
+    // Fade-in on scroll (and count-up numbers). Runs first so content always shows.
+    run("fade-in", () => {
+      const countUp = (el) => {
+        const target = +el.dataset.count, suffix = el.dataset.suffix || "";
+        if (!isFinite(target)) return;
+        const start = performance.now(), dur = 1400;
+        const tick = (t) => {
+          const p = Math.min((t - start) / dur, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + (p === 1 ? suffix : "");
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      if (!("IntersectionObserver" in window)) {
+        $$(".reveal").forEach((el) => el.classList.add("visible"));
+        $$("[data-count]").forEach(countUp);
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("visible");
+          e.target.querySelectorAll("[data-count]").forEach(countUp);
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.12 });
+      $$(".reveal").forEach((el) => io.observe(el));
+      // numbers that are not inside a fading block
+      $$("[data-count]").forEach((el) => { if (!el.closest(".reveal")) countUp(el); });
+    });
+
     // Light / dark switch
-    document.querySelector(".theme-toggle").addEventListener("click", () => {
-      const root = document.documentElement;
-      const dark = root.dataset.theme !== "dark";
-      if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
-      try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+    run("theme", () => {
+      $(".theme-toggle")?.addEventListener("click", () => {
+        const root = document.documentElement;
+        const dark = root.dataset.theme !== "dark";
+        if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
+        try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+      });
     });
 
     // Footer year
-    document.getElementById("year").textContent = new Date().getFullYear();
+    run("year", () => { const y = $("#year"); if (y) y.textContent = new Date().getFullYear(); });
 
     // Phone menu
-    const toggle = document.querySelector(".menu-toggle");
-    const menu = document.querySelector(".menu");
-    toggle.addEventListener("click", () => {
-      const open = menu.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", open);
+    run("menu", () => {
+      const toggle = $(".menu-toggle"), menu = $(".menu");
+      if (!toggle || !menu) return;
+      toggle.addEventListener("click", () => {
+        const open = menu.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", open);
+      });
+      menu.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          menu.classList.remove("open");
+          toggle.setAttribute("aria-expanded", false);
+        })
+      );
     });
-    menu.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => {
-        menu.classList.remove("open");
-        toggle.setAttribute("aria-expanded", false);
-      })
-    );
 
     // Header border + scroll progress bar
-    const header = document.querySelector(".header");
-    const bar = document.querySelector(".progress");
-    const onScroll = () => {
-      header.classList.toggle("scrolled", window.scrollY > 8);
-      const max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
-    };
-    addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    // Rotating words in the headline
-    const rot = document.querySelector(".rotator");
-    const words = rot.dataset.words.split("|");
-    let i = 0;
-    setInterval(() => {
-      rot.classList.add("out");
-      setTimeout(() => {
-        i = (i + 1) % words.length;
-        rot.textContent = words[i];
-        rot.classList.remove("out");
-      }, 400);
-    }, 3200);
-
-    // Count-up numbers
-    const countUp = (el) => {
-      const target = +el.dataset.count, suffix = el.dataset.suffix || "";
-      const start = performance.now(), dur = 1400;
-      const tick = (t) => {
-        const p = Math.min((t - start) / dur, 1);
-        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + (p === 1 ? suffix : "");
-        if (p < 1) requestAnimationFrame(tick);
+    run("scroll", () => {
+      const header = $(".header"), bar = $(".progress");
+      const onScroll = () => {
+        header?.classList.toggle("scrolled", window.scrollY > 8);
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (bar) bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
       };
-      requestAnimationFrame(tick);
-    };
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    });
 
-    // Fade-in on scroll (and start counters when visible)
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add("visible");
-        e.target.querySelectorAll("[data-count]").forEach(countUp);
-        io.unobserve(e.target);
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    // Rotating words in the headline (only if that phrase is on the page)
+    run("rotator", () => {
+      const rot = $(".rotator");
+      if (!rot) return;
+      const words = (rot.dataset.words || rot.textContent).split("|").filter(Boolean);
+      if (words.length < 2) return;
+      let i = 0;
+      setInterval(() => {
+        if (document.documentElement.classList.contains("editing")) return;
+        rot.classList.add("out");
+        setTimeout(() => {
+          i = (i + 1) % words.length;
+          rot.textContent = words[i];
+          rot.classList.remove("out");
+        }, 400);
+      }, 3200);
+    });
 
     // Publication filters
-    document.querySelectorAll(".filter").forEach((btn) =>
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".filter").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        const f = btn.dataset.filter;
-        document.querySelectorAll(".pubs li").forEach((li) => {
-          li.hidden = !(f === "all" || li.dataset.type === f);
-        });
-      })
-    );
+    run("filters", () => {
+      $$(".filter").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          $$(".filter").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const f = btn.dataset.filter;
+          $$(".pubs li").forEach((li) => {
+            li.hidden = !(f === "all" || li.dataset.type === f);
+          });
+        })
+      );
+    });
 
     // Copy email
-    const copyBtn = document.querySelector(".copy");
-    copyBtn.addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(copyBtn.dataset.copy); } catch (e) {}
-      copyBtn.querySelector("span").textContent = "Copied";
-      copyBtn.classList.add("done");
-      setTimeout(() => {
-        copyBtn.querySelector("span").textContent = "Copy";
-        copyBtn.classList.remove("done");
-      }, 1800);
+    run("copy", () => {
+      $$(".copy").forEach((copyBtn) => {
+        copyBtn.addEventListener("click", async () => {
+          const label = copyBtn.querySelector("span");
+          try { await navigator.clipboard.writeText(copyBtn.dataset.copy); } catch (e) {}
+          if (label) label.textContent = "Copied";
+          copyBtn.classList.add("done");
+          setTimeout(() => {
+            if (label) label.textContent = "Copy";
+            copyBtn.classList.remove("done");
+          }, 1800);
+        });
+      });
     });
   </script>
-
 
 
 </body></html>
