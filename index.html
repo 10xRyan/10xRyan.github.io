@@ -5,21 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Name</title>
   <meta name="description" content="Personal website of Your Name.">
-  <!-- Inter is a free font with a clean, modern feel -->
+  <!-- Fonts: Inter for text, Newsreader (a serif) for headings -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="top">
 
-  <!-- Frosted-glass navigation bar that stays at the top -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="#" class="logo">Your Name</a>
-      <nav>
+  <!-- ============ Header: name + menu ============ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#top" class="name">Your Name</a>
+
+      <!-- Menu button, only visible on phones -->
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+
+      <nav class="menu">
         <a href="#about">About</a>
-        <a href="#work">Work</a>
+        <!-- A menu item with a small dropdown -->
+        <div class="dropdown">
+          <a href="#research">Research</a>
+          <div class="dropdown-panel">
+            <a href="#research">Interests</a>
+            <a href="#publications">Publications</a>
+            <a href="#current">Current project</a>
+          </div>
+        </div>
+        <a href="#teaching">Teaching</a>
+        <a href="cv.pdf">CV</a>
+        <a href="#beyond">Beyond work</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -27,94 +44,193 @@
 
   <main>
 
-    <!-- HERO: the big opening statement -->
-    <section class="hero">
-      <p class="eyebrow reveal">Hello, I'm</p>
-      <h1 class="headline reveal">Your Name.</h1>
-      <p class="subhead reveal">Designer. Builder. Curious about everything.<br>Replace this with a line about you.</p>
-      <div class="actions reveal">
-        <a href="#work" class="btn btn-primary">See my work</a>
-        <a href="#contact" class="link-arrow">Get in touch</a>
-      </div>
-      <!-- Replace photo.jpg with your own image in the same folder -->
-      <div class="hero-image reveal">
-        <img src="photo.jpg" alt="Photo of Your Name">
+    <!-- ============ About: photo beside a short introduction ============ -->
+    <section id="about" class="intro">
+      <figure class="portrait reveal">
+        <!-- Put your photo in the same folder and name it photo.jpg -->
+        <img src="photo.jpg" alt="Portrait of Your Name">
+        <figcaption>Photograph by Photographer Name</figcaption>
+      </figure>
+
+      <div class="intro-text reveal">
+        <p class="kicker">About</p>
+        <h1>I study and write about the things I care about most.</h1>
+        <p>
+          I'm a <em>your role</em> at <em>your institution or company</em>.
+          Before that, I was <em>a previous role</em> at <em>a previous place</em>.
+        </p>
+        <p>
+          My work focuses on <em>topic one</em> and <em>topic two</em>. This
+          page collects my research, teaching, and a few things I enjoy
+          outside of work.
+        </p>
+
+        <!-- A small personal touch, like a pronunciation note -->
+        <p class="note">
+          <span class="note-label">Say it like</span>
+          "Your" sounds like <em>yor</em> · "Name" sounds like <em>naym</em>
+        </p>
+
+        <div class="quick-links">
+          <a href="#research">Research</a>
+          <a href="#publications">Publications</a>
+          <a href="cv.pdf">Download CV</a>
+        </div>
       </div>
     </section>
 
-    <!-- ABOUT: dark full-width band -->
-    <section id="about" class="band dark">
-      <div class="container narrow">
-        <p class="eyebrow reveal">About</p>
-        <h2 class="reveal">A short, confident line<br>that sums you up.</h2>
-        <p class="lead reveal">
-          Write a few sentences about yourself: what you do, what you care
-          about, and what you're working on right now. Keep it short, and
-          let the white space do the talking.
+    <!-- ============ Research interests ============ -->
+    <section id="research" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">Research</p>
+        <h2>Interests</h2>
+      </div>
+      <div class="section-body reveal">
+        <p>
+          A short paragraph about the questions that drive your work and why
+          they matter to you. Keep it conversational, written the way you'd
+          explain it to a curious friend.
+        </p>
+        <ul class="tags">
+          <li>Topic one</li>
+          <li>Topic two</li>
+          <li>Topic three</li>
+          <li>Topic four</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ Current project, shown as a quiet highlighted card ============ -->
+    <section id="current" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">Current project</p>
+        <h2>What I'm working on</h2>
+      </div>
+      <div class="section-body reveal">
+        <article class="feature">
+          <p class="feature-meta">Book · In progress</p>
+          <h3>Title of Your Book or Main Project</h3>
+          <p>
+            Two or three sentences on what the project argues or builds, and
+            who it's for.
+          </p>
+          <a href="#" class="more">Read more</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ Publications: a clean list. Copy an <li> to add more ============ -->
+    <section id="publications" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">Research</p>
+        <h2>Publications</h2>
+      </div>
+      <div class="section-body reveal">
+        <ol class="pubs">
+          <li>
+            <span class="year">2026</span>
+            <div>
+              <a href="#" class="pub-title">Title of an Article</a>
+              <p class="pub-venue">Journal Name, Volume(Issue)</p>
+            </div>
+          </li>
+          <li>
+            <span class="year">2024</span>
+            <div>
+              <a href="#" class="pub-title">Title of Another Article</a>
+              <p class="pub-venue">Journal Name · with Co-Author Name</p>
+            </div>
+          </li>
+          <li>
+            <span class="year">2022</span>
+            <div>
+              <a href="#" class="pub-title">Title of an Earlier Piece</a>
+              <p class="pub-venue">Edited Collection, Publisher</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ Teaching ============ -->
+    <section id="teaching" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">Teaching</p>
+        <h2>Courses</h2>
+      </div>
+      <div class="section-body reveal">
+        <div class="courses">
+          <div class="course">
+            <h3>Course Title One</h3>
+            <p>Undergraduate · A one-line description of the course.</p>
+          </div>
+          <div class="course">
+            <h3>Course Title Two</h3>
+            <p>Graduate seminar · A one-line description of the course.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Beyond work: the personal side ============ -->
+    <section id="beyond" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">Beyond work</p>
+        <h2>A hobby I love</h2>
+      </div>
+      <div class="section-body reveal">
+        <p>
+          A few sentences about something you do outside of work, such as
+          a sport, a craft, music, or travel, and what it means to you.
+          This is what makes a personal site feel like a person.
         </p>
       </div>
-
-      <!-- Quick stats: change the numbers and labels -->
-      <div class="container stats">
-        <div class="stat reveal"><span class="num">5+</span><span class="label">Years of experience</span></div>
-        <div class="stat reveal"><span class="num">20</span><span class="label">Projects shipped</span></div>
-        <div class="stat reveal"><span class="num">∞</span><span class="label">Cups of coffee</span></div>
-      </div>
     </section>
 
-    <!-- WORK: grid of large rounded tiles. Copy an <a class="tile"> block to add more -->
-    <section id="work" class="band">
-      <div class="container">
-        <p class="eyebrow center reveal">Selected work</p>
-        <h2 class="center reveal">Things I've made.</h2>
-
-        <div class="tiles">
-          <a href="#" class="tile tile-wide grad-1 reveal">
-            <p class="tile-kicker">Featured</p>
-            <h3>Project One</h3>
-            <p>A one-sentence description of your best project.</p>
-            <span class="link-arrow">Learn more</span>
-          </a>
-          <a href="#" class="tile grad-2 reveal">
-            <h3>Project Two</h3>
-            <p>What it is, in a sentence.</p>
-            <span class="link-arrow">Learn more</span>
-          </a>
-          <a href="#" class="tile grad-3 reveal">
-            <h3>Project Three</h3>
-            <p>What it is, in a sentence.</p>
-            <span class="link-arrow">Learn more</span>
-          </a>
-        </div>
+    <!-- ============ Contact ============ -->
+    <section id="contact" class="section contact">
+      <div class="section-head reveal">
+        <p class="kicker">Contact</p>
+        <h2>Say hello</h2>
       </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="band light-gray">
-      <div class="container narrow center">
-        <h2 class="reveal">Let's talk.</h2>
-        <p class="lead reveal">Have an idea, a project, or just want to say hi?</p>
-        <div class="actions reveal">
-          <a href="mailto:you@example.com" class="btn btn-primary">Email me</a>
-        </div>
-        <div class="social reveal">
-          <a href="https://github.com/yourusername">GitHub</a>
-          <a href="https://www.linkedin.com/in/yourusername">LinkedIn</a>
-        </div>
+      <div class="section-body reveal">
+        <p>You're welcome to get in touch by email.</p>
+        <a href="mailto:you@example.com" class="email">you@example.com</a>
       </div>
     </section>
 
   </main>
 
-  <footer>
-    <p>© <span id="year"></span> Your Name. Built by hand.</p>
+  <footer class="footer">
+    <p>© <span id="year"></span> Your Name</p>
+    <a href="#top">Back to top ↑</a>
   </footer>
 
   <script>
-    // Fill in the current year
+    // Current year in the footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Fade elements in as they scroll into view
+    // Phone menu: open and close
+    const toggle = document.querySelector(".menu-toggle");
+    const menu = document.querySelector(".menu");
+    toggle.addEventListener("click", () => {
+      const open = menu.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open);
+    });
+    menu.querySelectorAll("a").forEach((link) =>
+      link.addEventListener("click", () => {
+        menu.classList.remove("open");
+        toggle.setAttribute("aria-expanded", false);
+      })
+    );
+
+    // Add a soft shadow to the header once you scroll
+    const header = document.querySelector(".header");
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 8);
+    });
+
+    // Gentle fade-in as sections come into view
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -122,8 +238,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-
+    }, { threshold: 0.12 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   </script>
 </body>
