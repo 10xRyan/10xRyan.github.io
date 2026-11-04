@@ -4,242 +4,503 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Name</title>
-  <meta name="description" content="Personal website of Your Name.">
-  <!-- Fonts: Inter for text, Newsreader (a serif) for headings -->
+  <meta name="description" content="Personal website of Your Name: research, writing, teaching, and life beyond work.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body id="top">
 
-  <!-- ============ Header: name + menu ============ -->
+  <!-- Thin progress bar that fills as you scroll -->
+  <div class="progress" aria-hidden="true"></div>
+
+  <!-- Soft colored light in the background -->
+  <div class="ambient" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
   <header class="header">
     <div class="header-inner">
-      <a href="#top" class="name">Your Name</a>
+      <a href="#top" class="brand">
+        <span class="brand-mark">YN</span>
+        <span class="brand-name">Your Name</span>
+      </a>
 
-      <!-- Menu button, only visible on phones -->
       <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span>
       </button>
 
       <nav class="menu">
         <a href="#about">About</a>
-        <!-- A menu item with a small dropdown -->
         <div class="dropdown">
           <a href="#research">Research</a>
           <div class="dropdown-panel">
-            <a href="#research">Interests</a>
-            <a href="#publications">Publications</a>
-            <a href="#current">Current project</a>
+            <a href="#research"><strong>Interests</strong><small>The questions I work on</small></a>
+            <a href="#book"><strong>The Book</strong><small>My current project</small></a>
+            <a href="#publications"><strong>Publications</strong><small>Articles and chapters</small></a>
           </div>
         </div>
         <a href="#teaching">Teaching</a>
-        <a href="cv.pdf">CV</a>
         <a href="#beyond">Beyond work</a>
-        <a href="#contact">Contact</a>
+        <a href="cv.pdf">CV</a>
+        <a href="#contact" class="nav-cta">Get in touch</a>
       </nav>
     </div>
   </header>
 
   <main>
 
-    <!-- ============ About: photo beside a short introduction ============ -->
-    <section id="about" class="intro">
-      <figure class="portrait reveal">
-        <!-- Put your photo in the same folder and name it photo.jpg -->
-        <img src="photo.jpg" alt="Portrait of Your Name">
-        <figcaption>Photograph by Photographer Name</figcaption>
-      </figure>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero container">
+      <div class="hero-text">
+        <p class="status reveal"><span class="pulse"></span>Currently writing a book &amp; open to collaborations</p>
 
-      <div class="intro-text reveal">
-        <p class="kicker">About</p>
-        <h1>I study and write about the things I care about most.</h1>
-        <p>
-          I'm a <em>your role</em> at <em>your institution or company</em>.
-          Before that, I was <em>a previous role</em> at <em>a previous place</em>.
-        </p>
-        <p>
-          My work focuses on <em>topic one</em> and <em>topic two</em>. This
-          page collects my research, teaching, and a few things I enjoy
-          outside of work.
+        <h1 class="hero-title reveal">
+          Your Name
+          <span class="hero-line">thinks about <em class="rotator" data-words="what makes a life go well|why people matter|how we should live together|the value of ordinary things">what makes a life go well</em></span>
+        </h1>
+
+        <p class="hero-bio reveal">
+          I'm a <strong>Professor of Your Field</strong> at <strong>Your University</strong>.
+          I write about big questions in plain language, teach students who
+          like to argue, and spend my mornings on a yoga mat.
         </p>
 
-        <!-- A small personal touch, like a pronunciation note -->
-        <p class="note">
-          <span class="note-label">Say it like</span>
-          "Your" sounds like <em>yor</em> · "Name" sounds like <em>naym</em>
-        </p>
-
-        <div class="quick-links">
-          <a href="#research">Research</a>
-          <a href="#publications">Publications</a>
-          <a href="cv.pdf">Download CV</a>
+        <div class="hero-actions reveal">
+          <a href="#research" class="btn btn-dark">Explore my work</a>
+          <a href="cv.pdf" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download CV
+          </a>
         </div>
-      </div>
-    </section>
 
-    <!-- ============ Research interests ============ -->
-    <section id="research" class="section">
-      <div class="section-head reveal">
-        <p class="kicker">Research</p>
-        <h2>Interests</h2>
-      </div>
-      <div class="section-body reveal">
-        <p>
-          A short paragraph about the questions that drive your work and why
-          they matter to you. Keep it conversational, written the way you'd
-          explain it to a curious friend.
-        </p>
-        <ul class="tags">
-          <li>Topic one</li>
-          <li>Topic two</li>
-          <li>Topic three</li>
-          <li>Topic four</li>
+        <ul class="hero-meta reveal">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            Your City, State
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h3l2-6 4 12 2-6h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Say it like <span class="say">“yor-naym”</span>
+          </li>
         </ul>
       </div>
+
+      <!-- Portrait card with floating details -->
+      <div class="hero-visual reveal">
+        <div class="portrait">
+          <!-- Shows your initials until you add photo.jpg to the folder -->
+          <div class="portrait-fallback" aria-hidden="true">YN</div>
+          <img src="photo.jpg" alt="Portrait of Your Name" onerror="this.remove()">
+        </div>
+
+        <div class="float-card float-top">
+          <span class="float-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15ZM5 19.5A1.5 1.5 0 0 0 6.5 21H19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <small>Now writing</small>
+            <strong>The Title of My Book</strong>
+          </div>
+        </div>
+
+        <div class="float-card float-bottom">
+          <div class="avatars"><span></span><span></span><span></span></div>
+          <div>
+            <small>Advising</small>
+            <strong>8 grad students</strong>
+          </div>
+        </div>
+
+        <p class="credit">Photograph by Photographer Name</p>
+      </div>
     </section>
 
-    <!-- ============ Current project, shown as a quiet highlighted card ============ -->
-    <section id="current" class="section">
-      <div class="section-head reveal">
-        <p class="kicker">Current project</p>
-        <h2>What I'm working on</h2>
-      </div>
-      <div class="section-body reveal">
-        <article class="feature">
-          <p class="feature-meta">Book · In progress</p>
-          <h3>Title of Your Book or Main Project</h3>
+    <!-- Places you've been -->
+    <section class="affiliations container reveal" aria-label="Affiliations">
+      <p>Teaching &amp; research at</p>
+      <ul>
+        <li>Your University</li>
+        <li>Previous University</li>
+        <li>A Research Institute</li>
+        <li>Visiting College</li>
+      </ul>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="section container about">
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="kicker">About</p>
+          <h2>A little about me, <em>in my own words.</em></h2>
+        </div>
+        <div class="about-copy reveal">
           <p>
-            Two or three sentences on what the project argues or builds, and
-            who it's for.
+            I recently joined the Department of Your Field at Your University.
+            Before that, I spent eight years at Previous University, where I
+            taught, wrote, and learned how much I love working with students.
           </p>
-          <a href="#" class="more">Read more</a>
+          <p>
+            My research asks what gives things their value, and what that means
+            for how we treat one another. I like ideas that start in the seminar
+            room and end up at the dinner table.
+          </p>
+          <a href="#research" class="text-link">See what I'm working on</a>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat reveal"><span class="stat-num" data-count="12">0</span><span class="stat-label">Years teaching</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="24">0</span><span class="stat-label">Published articles</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="2">0</span><span class="stat-label">Books</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="30" data-suffix="+">0</span><span class="stat-label">Talks given</span></div>
+      </div>
+    </section>
+
+    <!-- ===================== RESEARCH ===================== -->
+    <section id="research" class="section container">
+      <div class="section-head reveal">
+        <p class="kicker">Research</p>
+        <h2>The questions I keep <em>coming back to.</em></h2>
+      </div>
+
+      <div class="cards-3">
+        <article class="card reveal">
+          <span class="card-icon tint-blue">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span class="card-num">01</span>
+          <h3>First research area</h3>
+          <p>One or two sentences on the big question here and why it matters to people outside your field.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-icon tint-rose">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="card-num">02</span>
+          <h3>Second research area</h3>
+          <p>A short description written the way you'd explain it to a curious friend over coffee.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-icon tint-sage">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c8 0 16-6 16-16C10 4 4 10 4 20Zm0 0 8-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="card-num">03</span>
+          <h3>Third research area</h3>
+          <p>What you're exploring here, and a hint about where the work is heading next.</p>
         </article>
       </div>
     </section>
 
-    <!-- ============ Publications: a clean list. Copy an <li> to add more ============ -->
-    <section id="publications" class="section">
-      <div class="section-head reveal">
-        <p class="kicker">Research</p>
-        <h2>Publications</h2>
-      </div>
-      <div class="section-body reveal">
-        <ol class="pubs">
-          <li>
-            <span class="year">2026</span>
-            <div>
-              <a href="#" class="pub-title">Title of an Article</a>
-              <p class="pub-venue">Journal Name, Volume(Issue)</p>
-            </div>
-          </li>
-          <li>
-            <span class="year">2024</span>
-            <div>
-              <a href="#" class="pub-title">Title of Another Article</a>
-              <p class="pub-venue">Journal Name · with Co-Author Name</p>
-            </div>
-          </li>
-          <li>
-            <span class="year">2022</span>
-            <div>
-              <a href="#" class="pub-title">Title of an Earlier Piece</a>
-              <p class="pub-venue">Edited Collection, Publisher</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ============ Teaching ============ -->
-    <section id="teaching" class="section">
-      <div class="section-head reveal">
-        <p class="kicker">Teaching</p>
-        <h2>Courses</h2>
-      </div>
-      <div class="section-body reveal">
-        <div class="courses">
-          <div class="course">
-            <h3>Course Title One</h3>
-            <p>Undergraduate · A one-line description of the course.</p>
+    <!-- ===================== FEATURED BOOK ===================== -->
+    <section id="book" class="section container">
+      <div class="book reveal">
+        <div class="book-cover-wrap">
+          <div class="book-cover">
+            <span class="book-label">Your Publisher · 2027</span>
+            <span class="book-title">The Title<br>of My Book</span>
+            <span class="book-author">Your Name</span>
           </div>
-          <div class="course">
-            <h3>Course Title Two</h3>
-            <p>Graduate seminar · A one-line description of the course.</p>
+        </div>
+        <div class="book-text">
+          <p class="kicker light">Featured · Forthcoming</p>
+          <h2>The Title of My Book</h2>
+          <p class="book-sub">A subtitle that explains what the book is about</p>
+          <p>
+            Three or four sentences about the argument: the puzzle it starts
+            from, what it proposes, and why a general reader might care. This
+            is your chance to sound like yourself.
+          </p>
+          <blockquote>
+            “A short line of praise from a colleague or reviewer goes here.”
+            <cite>— Reviewer Name, Their University</cite>
+          </blockquote>
+          <div class="book-actions">
+            <a href="#" class="btn btn-light">Read the introduction</a>
+            <a href="#" class="text-link on-dark">Table of contents</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ Beyond work: the personal side ============ -->
-    <section id="beyond" class="section">
-      <div class="section-head reveal">
-        <p class="kicker">Beyond work</p>
-        <h2>A hobby I love</h2>
+    <!-- ===================== PUBLICATIONS ===================== -->
+    <section id="publications" class="section container">
+      <div class="section-head split reveal">
+        <div>
+          <p class="kicker">Writing</p>
+          <h2>Selected <em>publications.</em></h2>
+        </div>
+        <!-- Filter buttons: they match the data-type on each item below -->
+        <div class="filters" role="tablist">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="article">Articles</button>
+          <button class="filter" data-filter="chapter">Chapters</button>
+          <button class="filter" data-filter="edited">Edited</button>
+        </div>
       </div>
-      <div class="section-body reveal">
-        <p>
-          A few sentences about something you do outside of work, such as
-          a sport, a craft, music, or travel, and what it means to you.
-          This is what makes a personal site feel like a person.
-        </p>
+
+      <ol class="pubs reveal">
+        <li data-type="article">
+          <span class="pub-year">2026</span>
+          <div class="pub-body">
+            <a href="#" class="pub-title">Title of a recent article</a>
+            <p class="pub-venue">Journal Name, vol. 12, no. 3</p>
+          </div>
+          <span class="badge">Article</span>
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+        </li>
+        <li data-type="edited">
+          <span class="pub-year">2025</span>
+          <div class="pub-body">
+            <a href="#" class="pub-title">Title of an Edited Collection</a>
+            <p class="pub-venue">Publisher · co-edited with Colleague Name</p>
+          </div>
+          <span class="badge">Edited</span>
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+        </li>
+        <li data-type="article">
+          <span class="pub-year">2024</span>
+          <div class="pub-body">
+            <a href="#" class="pub-title">Another article with a longer, more descriptive title</a>
+            <p class="pub-venue">Journal Name</p>
+          </div>
+          <span class="badge">Article</span>
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+        </li>
+        <li data-type="chapter">
+          <span class="pub-year">2023</span>
+          <div class="pub-body">
+            <a href="#" class="pub-title">A chapter in someone else's book</a>
+            <p class="pub-venue">In <i>Book Title</i>, ed. Editor Name, Publisher</p>
+          </div>
+          <span class="badge">Chapter</span>
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+        </li>
+        <li data-type="article">
+          <span class="pub-year">2021</span>
+          <div class="pub-body">
+            <a href="#" class="pub-title">An earlier article that people still cite</a>
+            <p class="pub-venue">Journal Name</p>
+          </div>
+          <span class="badge">Article</span>
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+        </li>
+      </ol>
+      <a href="cv.pdf" class="text-link more-link reveal">Full list in my CV</a>
+    </section>
+
+    <!-- ===================== PATH (timeline) ===================== -->
+    <section class="section container">
+      <div class="section-head reveal">
+        <p class="kicker">Path</p>
+        <h2>How I <em>got here.</em></h2>
+      </div>
+      <ol class="timeline">
+        <li class="reveal">
+          <span class="t-date">2026 — now</span>
+          <h3>Professor, Your University</h3>
+          <p>Teaching and writing in the Department of Your Field.</p>
+        </li>
+        <li class="reveal">
+          <span class="t-date">2018 — 2026</span>
+          <h3>Associate Professor, Previous University</h3>
+          <p>Built a graduate seminar series and advised twelve PhD students.</p>
+        </li>
+        <li class="reveal">
+          <span class="t-date">2016 — 2018</span>
+          <h3>Postdoctoral Fellow, A Research Institute</h3>
+          <p>Two quiet years of reading, writing, and long walks.</p>
+        </li>
+        <li class="reveal">
+          <span class="t-date">2016</span>
+          <h3>PhD, Your Graduate School</h3>
+          <p>Dissertation on the topic that started it all.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===================== TEACHING ===================== -->
+    <section id="teaching" class="section container">
+      <div class="section-head reveal">
+        <p class="kicker">Teaching</p>
+        <h2>In the <em>classroom.</em></h2>
+      </div>
+      <div class="courses">
+        <article class="course reveal">
+          <div class="course-top"><span class="tag">Undergraduate</span><span class="course-code">PHIL 101</span></div>
+          <h3>Introduction to Your Field</h3>
+          <p>A first course on the big questions, with lots of discussion and no prerequisites.</p>
+          <span class="course-term">Fall semesters</span>
+        </article>
+        <article class="course reveal">
+          <div class="course-top"><span class="tag">Undergraduate</span><span class="course-code">PHIL 230</span></div>
+          <h3>A Popular Elective</h3>
+          <p>What students read, what they argue about, and what they write by the end.</p>
+          <span class="course-term">Spring semesters</span>
+        </article>
+        <article class="course reveal">
+          <div class="course-top"><span class="tag tag-dark">Graduate</span><span class="course-code">PHIL 610</span></div>
+          <h3>Graduate Seminar</h3>
+          <p>A deep dive into recent work, built around student presentations.</p>
+          <span class="course-term">Alternate years</span>
+        </article>
+      </div>
+      <figure class="testimonial reveal">
+        <blockquote>“A short quote from a student about what your class meant to them.”</blockquote>
+        <figcaption>— Former student, Class of 2025</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===================== BEYOND WORK ===================== -->
+    <section id="beyond" class="section container">
+      <div class="beyond">
+        <div class="beyond-text reveal">
+          <p class="kicker">Beyond work</p>
+          <h2>Off the page, <em>on the mat.</em></h2>
+          <p>
+            I've practiced yoga for fifteen years and teach a small community
+            class on weekends. It keeps me patient, curious, and humble, which
+            turn out to be good habits for thinking too.
+          </p>
+          <ul class="checks">
+            <li>Weekend community class, all levels</li>
+            <li>Certified instructor since 2019</li>
+            <li>Always looking for a good trail</li>
+          </ul>
+        </div>
+        <!-- Swap the gradient tiles for photos: add <img src="..."> inside each -->
+        <div class="gallery reveal">
+          <figure class="g g1"><figcaption>Morning practice</figcaption></figure>
+          <figure class="g g2"><figcaption>Weekend class</figcaption></figure>
+          <figure class="g g3"><figcaption>On the trail</figcaption></figure>
+        </div>
       </div>
     </section>
 
-    <!-- ============ Contact ============ -->
-    <section id="contact" class="section contact">
-      <div class="section-head reveal">
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="section container">
+      <div class="contact reveal">
         <p class="kicker">Contact</p>
-        <h2>Say hello</h2>
-      </div>
-      <div class="section-body reveal">
-        <p>You're welcome to get in touch by email.</p>
-        <a href="mailto:you@example.com" class="email">you@example.com</a>
+        <h2>Let's <em>talk.</em></h2>
+        <p>I'm happy to hear from students, colleagues, and curious readers.</p>
+
+        <div class="email-row">
+          <a href="mailto:you@example.com" class="email">you@example.com</a>
+          <button class="copy" data-copy="you@example.com" aria-label="Copy email address">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span>Copy</span>
+          </button>
+        </div>
+
+        <div class="contact-links">
+          <a href="#">Office: Building 210</a>
+          <a href="#">Office hours: Tue 2–4pm</a>
+          <a href="https://www.linkedin.com/in/yourusername">LinkedIn</a>
+          <a href="#">Google Scholar</a>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="footer">
-    <p>© <span id="year"></span> Your Name</p>
+  <footer class="footer container">
+    <span class="brand-mark small">YN</span>
+    <p>© <span id="year"></span> Your Name · Made with care</p>
     <a href="#top">Back to top ↑</a>
   </footer>
 
   <script>
-    // Current year in the footer
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Phone menu: open and close
+    // Phone menu
     const toggle = document.querySelector(".menu-toggle");
     const menu = document.querySelector(".menu");
     toggle.addEventListener("click", () => {
       const open = menu.classList.toggle("open");
       toggle.setAttribute("aria-expanded", open);
     });
-    menu.querySelectorAll("a").forEach((link) =>
-      link.addEventListener("click", () => {
+    menu.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
         menu.classList.remove("open");
         toggle.setAttribute("aria-expanded", false);
       })
     );
 
-    // Add a soft shadow to the header once you scroll
+    // Header border + scroll progress bar
     const header = document.querySelector(".header");
-    window.addEventListener("scroll", () => {
+    const bar = document.querySelector(".progress");
+    const onScroll = () => {
       header.classList.toggle("scrolled", window.scrollY > 8);
-    });
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-    // Gentle fade-in as sections come into view
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
+    // Rotating words in the headline
+    const rot = document.querySelector(".rotator");
+    const words = rot.dataset.words.split("|");
+    let i = 0;
+    setInterval(() => {
+      rot.classList.add("out");
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        rot.textContent = words[i];
+        rot.classList.remove("out");
+      }, 400);
+    }, 3200);
+
+    // Count-up numbers
+    const countUp = (el) => {
+      const target = +el.dataset.count, suffix = el.dataset.suffix || "";
+      const start = performance.now(), dur = 1400;
+      const tick = (t) => {
+        const p = Math.min((t - start) / dur, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + (p === 1 ? suffix : "");
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    // Fade-in on scroll (and start counters when visible)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("visible");
+        e.target.querySelectorAll("[data-count]").forEach(countUp);
+        io.unobserve(e.target);
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+    // Publication filters
+    document.querySelectorAll(".filter").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const f = btn.dataset.filter;
+        document.querySelectorAll(".pubs li").forEach((li) => {
+          li.hidden = !(f === "all" || li.dataset.type === f);
+        });
+      })
+    );
+
+    // Copy email
+    const copyBtn = document.querySelector(".copy");
+    copyBtn.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(copyBtn.dataset.copy); } catch (e) {}
+      copyBtn.querySelector("span").textContent = "Copied";
+      copyBtn.classList.add("done");
+      setTimeout(() => {
+        copyBtn.querySelector("span").textContent = "Copy";
+        copyBtn.classList.remove("done");
+      }, 1800);
+    });
   </script>
 </body>
 </html>
