@@ -410,7 +410,8 @@
       if (imageTarget.classList.contains("portrait")) imageTarget.appendChild(img);
       else imageTarget.insertBefore(img, imageTarget.firstChild);
     }
-    img.setAttribute("onerror", "this.remove()");
+    img.setAttribute("onerror", "this.classList.add('missing')");
+    img.classList.remove("missing");
     img.setAttribute("data-ed-path", path);
     img.src = dataURL;
     state.pendingImages.set(path, dataURL);
@@ -560,7 +561,7 @@
   bar.innerHTML = `
     <span class="ed-label"><span class="ed-dot"></span>Editing</span>
     <button class="ed-btn" data-act="undo" title="Undo move, duplicate or delete">${ICONS.undo}Undo</button>
-    <button class="ed-btn" data-act="theme">${ICONS.palette}Colors</button>
+    <button class="ed-btn" data-act="theme">${ICONS.palette}Title &amp; colors</button>
     <button class="ed-btn" data-act="help">${ICONS.help}Tips</button>
     <span class="ed-sep"></span>
     <button class="ed-btn" data-act="download" title="Download the edited page">${ICONS.download}Download</button>
@@ -609,7 +610,8 @@
         <li><b>Photos:</b> click your portrait or a gallery tile to upload a new picture.</li>
         <li><b>Blocks:</b> hover a card, publication, course or section to move, duplicate or delete it.</li>
         <li><b>Headline phrases:</b> click the colored rotating words.</li>
-        <li><b>Colors:</b> use the Colors button.</li>
+        <li><b>Page title &amp; colors:</b> use the Title &amp; colors button.</li>
+        <li><b>Removing things:</b> hover and use the trash icon. Text you clear out completely is removed when you publish.</li>
       </ul>
       <div class="ed-row"><button class="ed-btn" data-close>Got it</button></div>`, "help")
       ?.querySelector("[data-close]").addEventListener("click", closePanel);
@@ -657,7 +659,10 @@
   function openThemePanel() {
     if (root.dataset.theme === "dark") { delete root.dataset.theme; }
     const p = openPanel(`
-      <h4>Colors</h4>
+      <h4>Page title</h4>
+      <p>Shown on the browser tab and in search results.</p>
+      <input type="text" data-title value="">
+      <h4 style="margin-top:20px">Colors</h4>
       <p>Pick a preset or fine-tune each color. Changes show instantly.</p>
       <div class="ed-swatches">${Object.entries(PRESETS).map(([name, v]) =>
         `<button class="ed-swatch" data-preset="${name}" title="${name}">${["--bg", "--text", "--accent", "--accent-2"].map((k) => `<span style="background:${v[k]}"></span>`).join("")}</button>`).join("")}</div>
@@ -668,6 +673,14 @@
         <button class="ed-btn primary" data-act="done">Done</button>
       </div>`, "theme");
     if (!p) return;
+    const titleInput = p.querySelector("[data-title]");
+    titleInput.value = doc.title;
+    titleInput.addEventListener("input", () => {
+      doc.title = titleInput.value;
+      const meta = doc.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", "Personal website of " + titleInput.value + ".");
+      markDirty();
+    });
     const collect = () => Object.fromEntries([...p.querySelectorAll("input[data-var]")].map((i) => [i.dataset.var, i.value]));
     p.addEventListener("input", (e) => { if (e.target.dataset.var) applyTheme(collect()); });
     p.addEventListener("click", (e) => {
@@ -695,6 +708,21 @@
     clone.classList.remove("editing");
     if (!clone.classList.length) clone.removeAttribute("class");
     clone.removeAttribute("data-theme");
+    // Tidy text that was edited: drop stray formatting the browser adds
+    const unwrap = (n) => { while (n.firstChild) n.parentNode.insertBefore(n.firstChild, n); n.remove(); };
+    clone.querySelectorAll('[contenteditable="true"]').forEach((region) => {
+      region.querySelectorAll("font, span:not([class]):not([id])").forEach(unwrap);
+      region.querySelectorAll("[style]").forEach((n) => { if (!n.closest("svg")) n.removeAttribute("style"); });
+      if (region.getAttribute("style") && !region.closest("svg")) region.removeAttribute("style");
+    });
+    // Remove text blocks that were emptied out completely
+    clone.querySelectorAll('[contenteditable="true"]').forEach((n) => {
+      if (!n.matches("p, li, h1, h2, h3, blockquote, figcaption, a")) return;
+      if (n.id === "year") return;
+      if (n.textContent.trim() === "" && !n.querySelector("img, svg")) n.remove();
+    });
+    clone.querySelectorAll("main ul, main ol").forEach((list) => { if (!list.children.length) list.remove(); });
+    clone.querySelectorAll("img.missing").forEach((img) => img.classList.remove("missing"));
     clone.querySelectorAll("[contenteditable]").forEach((n) => n.removeAttribute("contenteditable"));
     clone.querySelectorAll("[spellcheck]").forEach((n) => n.removeAttribute("spellcheck"));
     clone.querySelectorAll(".ed-hover").forEach((n) => n.classList.remove("ed-hover"));

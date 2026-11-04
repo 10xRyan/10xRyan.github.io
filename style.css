@@ -27,8 +27,8 @@
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+/* Dark theme: only used when a visitor clicks the moon button */
+:root[data-theme="dark"] {
     --bg: #16120f;
     --surface: rgba(36, 29, 24, 0.74);
     --surface-solid: #221c17;
@@ -42,7 +42,6 @@
     --ink: #2e2520;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px -12px rgba(0,0,0,.6);
     --shadow-lg: 0 40px 80px -30px rgba(0,0,0,.8);
-  }
 }
 
 /* ================================================================
@@ -114,9 +113,7 @@ h2 em, h1 em { font-style: italic; color: var(--muted); }
 .orb-1 { width: 520px; height: 520px; background: #e8d6bd; top: -160px; right: -120px; }
 .orb-2 { width: 440px; height: 440px; background: #efe2d0; top: 30%; left: -180px; animation-delay: -8s; }
 .orb-3 { width: 380px; height: 380px; background: #dfdcc6; bottom: -120px; right: 20%; animation-delay: -16s; }
-@media (prefers-color-scheme: dark) {
-  .orb { opacity: .08; }
-}
+:root[data-theme="dark"] .orb { opacity: .08; }
 @keyframes drift {
   to { transform: translate(60px, 40px) scale(1.08); }
 }
@@ -229,6 +226,26 @@ h2 em, h1 em { font-style: italic; color: var(--muted); }
 .menu-toggle span:last-child { top: 23px; }
 .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* Light / dark switch */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  margin-left: 4px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  transition: color .2s, transform .4s var(--ease);
+}
+.theme-toggle:hover { color: var(--text); transform: rotate(20deg); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .moon { display: block; }
+.header-tools { display: flex; align-items: center; gap: 4px; order: 3; margin-left: 8px; }
+.header-inner .menu { margin-left: auto; }
 
 /* ================================================================
    Buttons
@@ -353,6 +370,8 @@ h2 em, h1 em { font-style: italic; color: var(--muted); }
 }
 .hero-visual:hover .portrait { transform: rotate(0); }
 .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* a photo that hasn't been uploaded yet stays out of sight */
+img.missing { display: none !important; }
 .portrait-fallback {
   position: absolute; inset: 0;
   display: grid;
