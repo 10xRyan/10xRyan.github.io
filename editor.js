@@ -892,28 +892,44 @@
     return btoa(bin);
   }
 
-  async function putFile(cfg, branch, path, base64, message) {
-    let sha;
-    try {
-      const existing = await gh(cfg, "GET", `/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`);
-      sha = existing && existing.sha;
-    } catch (e) {
-      if (e.status !== 404) throw e;
-    }
-    return gh(cfg, "PUT", `/contents/${encodeURI(path)}`, { message, content: base64, branch, ...(sha ? { sha } : {}) });
-  }
-
+  // Saves the page and every new photo together as ONE update, so GitHub
+  // only has to publish once (two quick updates make GitHub reject one).
   async function publish(cfg, progress) {
     progress("Connecting to GitHub…");
     const info = await gh(cfg, "GET", "");
     const branch = info.default_branch || "main";
+    const refPath = `/git/ref/heads/${encodeURIComponent(branch)}`;
+
+    const files = [];
     let i = 0;
     for (const [path, dataURL] of state.pendingImages) {
       progress(`Uploading photo ${++i} of ${state.pendingImages.size}…`);
-      await putFile(cfg, branch, path, dataURL.split(",")[1], `Add photo ${path.split("/").pop()}`);
+      const blob = await gh(cfg, "POST", "/git/blobs", { content: dataURL.split(",")[1], encoding: "base64" });
+      files.push({ path, mode: "100644", type: "blob", sha: blob.sha });
     }
     progress("Saving your page…");
-    await putFile(cfg, branch, pagePath(), textToBase64(buildCleanHTML()), "Update site from the visual editor");
-    state.pendingImages.clear();
+    const pageBlob = await gh(cfg, "POST", "/git/blobs", { content: textToBase64(buildCleanHTML()), encoding: "base64" });
+    files.push({ path: pagePath(), mode: "100644", type: "blob", sha: pageBlob.sha });
+
+    // Try twice in case something else changed the repository at the same moment
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const ref = await gh(cfg, "GET", refPath);
+      const parent = await gh(cfg, "GET", `/git/commits/${ref.object.sha}`);
+      const tree = await gh(cfg, "POST", "/git/trees", { base_tree: parent.tree.sha, tree: files });
+      const commit = await gh(cfg, "POST", "/git/commits", {
+        message: "Update site from the visual editor",
+        tree: tree.sha,
+        parents: [ref.object.sha],
+      });
+      try {
+        await gh(cfg, "PATCH", `/git/refs/heads/${encodeURIComponent(branch)}`, { sha: commit.sha });
+        state.pendingImages.clear();
+        return;
+      } catch (e) {
+        if (e.status !== 422 && e.status !== 409) throw e;
+        progress("Retrying…");
+      }
+    }
+    const e = new Error("conflict"); e.status = 409; throw e;
   }
 })();
