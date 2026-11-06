@@ -899,3 +899,162 @@ img.missing { display: none !important; }
   .footer { flex-wrap: wrap; }
   .float-card { transform: scale(.9); }
 }
+
+/* ================================================================
+   Full-screen photo intro
+   Your photo fills the first screen behind your name and bio,
+   and stops right where the Research section begins.
+   ================================================================ */
+section.hero.container {
+  position: relative;
+  isolation: isolate;
+  max-width: none;
+  min-height: calc(100vh - 72px);          /* whole screen below the header */
+  min-height: calc(100svh - 72px);
+  margin: 0;
+  padding: 72px max(28px, calc((100vw - var(--max)) / 2 + 28px)) 96px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;               /* text on the right, you on the left */
+  overflow: hidden;
+  color: #f8f2e9;
+}
+
+/* The photo becomes the background of the whole intro */
+section.hero .hero-visual {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  transform: none !important;
+}
+section.hero .portrait {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none !important;
+}
+section.hero .portrait img {
+  object-position: 34% 58%;                /* keeps your face in view when cropped */
+  animation: heroZoom 18s ease-out both;
+}
+@keyframes heroZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+section.hero .portrait-fallback { font-size: 0; }   /* plain color until a photo is added */
+
+/* Soft shade on the right so the text is easy to read */
+section.hero .portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(28, 21, 16, 0) 20%, rgba(28, 21, 16, .58) 48%, rgba(28, 21, 16, .86) 100%),
+    linear-gradient(0deg, rgba(28, 21, 16, .35) 0%, rgba(28, 21, 16, 0) 30%);
+}
+
+/* Text on the photo */
+section.hero .hero-text { position: relative; max-width: 560px; }
+section.hero .hero-title {
+  color: #fbf6ee;
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, .25);
+}
+section.hero .hero-bio,
+section.hero .hero-text > div:not(.hero-actions) {
+  max-width: 560px;
+  margin: 22px 0 0;
+  font-size: 1.04rem;
+  line-height: 1.7;
+  color: rgba(248, 242, 233, .9);
+  text-shadow: 0 1px 12px rgba(20, 14, 10, .45);
+}
+section.hero .hero-text > div:not(.hero-actions) { margin-top: 14px; }
+section.hero .hero-text > div:has(> br:only-child) { display: none; }   /* empty spacer lines */
+section.hero .hero-bio strong { color: #fff; }
+
+section.hero .hero-actions { margin-top: 32px; }
+section.hero .btn-dark { background: #f8f2e9; color: #2e2520; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .5); }
+section.hero .btn-ghost {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .35);
+  color: #f8f2e9;
+  backdrop-filter: blur(8px);
+}
+section.hero .btn-ghost:hover { background: rgba(255, 255, 255, .18); box-shadow: none; }
+
+/* Small "scroll" cue at the bottom of the photo */
+section.hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 22px;
+  height: 36px;
+  margin-left: -11px;
+  border: 1.5px solid rgba(248, 242, 233, .7);
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(248, 242, 233, .9) 0 2.5px, transparent 3px) 50% 8px / 6px 6px no-repeat;
+  animation: heroCue 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes heroCue { 50% { background-position: 50% 18px; } }
+
+/* Research starts with a little breathing room after the photo */
+section.hero + .section { padding-top: 104px; }
+
+/* Phones and tablets: the photo fills the first screen with your name on it,
+   and your bio continues just below it, before Research starts */
+@media (max-width: 960px) {
+  section.hero.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: calc(100vh - 72px);
+    grid-template-rows: calc(100svh - 72px);
+    align-items: start;
+    min-height: 0;
+    gap: 0;
+    padding: 0 0 72px;
+    background: #1f1813;
+  }
+  section.hero .hero-text { display: contents; }
+  section.hero .hero-visual {
+    position: relative;
+    grid-row: 1;
+    grid-column: 1;
+    height: 100%;
+    z-index: 0;
+  }
+  section.hero .portrait img { object-position: 32% 50%; }
+  section.hero .portrait::after {
+    background: linear-gradient(180deg, rgba(28, 21, 16, 0) 45%, rgba(28, 21, 16, .35) 70%, rgba(31, 24, 19, .95) 100%);
+  }
+  section.hero .hero-title {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    z-index: 1;
+    padding: 0 22px 84px;
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
+  }
+  section.hero .hero-bio,
+  section.hero .hero-text > div:not(.hero-actions),
+  section.hero .hero-actions {
+    max-width: 640px;
+    padding: 0 22px;
+    text-shadow: none;
+  }
+  section.hero .hero-bio { margin-top: 28px; }
+  section.hero .hero-bio,
+  section.hero .hero-text > div:not(.hero-actions) { font-size: 1rem; }
+  section.hero::after { bottom: auto; top: calc(100svh - 72px - 56px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section.hero .portrait img, section.hero::after { animation: none; }
+}
